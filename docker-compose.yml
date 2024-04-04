@@ -25,11 +25,19 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - CHROME_CLI=https://www.linuxserver.io/ #optional
     volumes:
-      - /path/to/config:/config
+      - ./chromium/config:/config
+      - ./bookmarks/bookmarks_1_17_24.html:/usr/share/chromium/initial_bookmarks.html
     ports:
       - 4000:3000
       - 4001:3001
+    shm_size: "1gb"
+    restart: unless-stopped
+  tor:
+    image: paradoxxs/tor-desktop
+    container_name: tor
+    ports:
+      - 5000:3000
+      - 5001:3001
     shm_size: "1gb"
     restart: unless-stopped
