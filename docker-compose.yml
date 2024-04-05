@@ -10,7 +10,8 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - ./backup/firefox:/config/backup
+      - ./bookmarks:/bookmarks
+      - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
       - 3000:3000
       - 3001:3001
@@ -26,8 +27,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - ./chromium/config:/config
-      - ./bookmarks/bookmarks_1_17_24.html:/usr/share/chromium/initial_bookmarks.html
+      - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
     ports:
       - 4000:3000
       - 4001:3001
@@ -36,6 +36,9 @@ services:
   tor:
     image: paradoxxs/tor-desktop
     container_name: tor
+    volumes:
+      - ./bookmarks:/bookmarks
+      - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
     ports:
       - 5000:3000
       - 5001:3001

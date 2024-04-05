@@ -1,6 +1,0 @@
-{
-  "distribution": {
-     "import_bookmarks": true,
-     "import_bookmarks_from_file": "/usr/share/chromium/initial_bookmarks.html"
-  }
-}
