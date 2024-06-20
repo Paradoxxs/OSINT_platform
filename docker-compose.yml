@@ -10,7 +10,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./bookmarks:/bookmarks
-      - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
+      - ./${CASE_NUMBER}/firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
       - "${FIREFOX_PORT_1}:3000"
       - "${FIREFOX_PORT_2}:3001"
@@ -39,7 +39,7 @@ services:
     container_name: ${CASE_NUMBER}_tor
     volumes:
       - ./bookmarks:/bookmarks
-      - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
+      - ./${CASE_NUMBER}/tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
     ports:
       - "${TOR_PORT_1}:3000"
       - "${TOR_PORT_2}:3001"
