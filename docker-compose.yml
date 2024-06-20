@@ -1,8 +1,7 @@
-version: '3'
 services:
   firefox:
     image: lscr.io/linuxserver/firefox:latest
-    container_name: firefox
+    container_name: ${CASE_NUMBER}_firefox
     security_opt:
       - seccomp:unconfined #optional
     environment:
@@ -13,13 +12,14 @@ services:
       - ./bookmarks:/bookmarks
       - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
-      - 3000:3000
-      - 3001:3001
+      - "${FIREFOX_PORT_1}:3000"
+      - "${FIREFOX_PORT_2}:3001"
     shm_size: "1gb"
     restart: unless-stopped
+
   chromium:
     image: lscr.io/linuxserver/chromium:latest
-    container_name: chromium
+    container_name: ${CASE_NUMBER}_chromium
     security_opt:
       - seccomp:unconfined #optional
     environment:
@@ -29,18 +29,19 @@ services:
     volumes:
       - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
     ports:
-      - 4000:3000
-      - 4001:3001
+      - "${CHROMIUM_PORT_1}:3000"
+      - "${CHROMIUM_PORT_2}:3001"
     shm_size: "1gb"
     restart: unless-stopped
+
   tor:
     image: paradoxxs/tor-desktop
-    container_name: tor
+    container_name: ${CASE_NUMBER}_tor
     volumes:
       - ./bookmarks:/bookmarks
       - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
     ports:
-      - 5000:3000
-      - 5001:3001
+      - "${TOR_PORT_1}:3000"
+      - "${TOR_PORT_2}:3001"
     shm_size: "1gb"
     restart: unless-stopped
