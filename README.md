@@ -1,5 +1,5 @@
 # OSINT planform 
-
+*This project is will WIP*
 Using docker container to spin up isolated browser 
 
 Instead of spinning up a entire virtual computer using VMware or Virtualbox, the goal of this project is too use a 
