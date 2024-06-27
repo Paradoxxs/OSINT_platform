@@ -45,3 +45,19 @@ services:
       - "${TOR_PORT_2}:3001"
     shm_size: "1gb"
     restart: unless-stopped
+
+    telegram:
+      image: paradoxxs/telegram
+      container_name: ${CASE_NUMBER}_telegram
+      ports:
+        - "${BASE_TELEGRAM_PORT}:3000"
+      shm_size: "1gb"
+      restart: unless-stopped
+
+    keybase:
+      image: paradoxxs/keybase
+      container_name: ${CASE_NUMBER}_keybase
+      ports:
+        - "${BASE_KEYBASE_PORT}:3000"
+      shm_size: "1gb"
+      restart: unless-stopped
