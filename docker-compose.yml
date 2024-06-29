@@ -1,7 +1,7 @@
 services:
   firefox:
     image: lscr.io/linuxserver/firefox:latest
-    container_name: ${CASE_NUMBER}_firefox
+    container_name: firefox
     security_opt:
       - seccomp:unconfined #optional
     environment:
@@ -19,7 +19,7 @@ services:
 
   chromium:
     image: lscr.io/linuxserver/chromium:latest
-    container_name: ${CASE_NUMBER}_chromium
+    container_name: chromium
     security_opt:
       - seccomp:unconfined #optional
     environment:
@@ -36,7 +36,7 @@ services:
 
   tor:
     image: paradoxxs/tor-desktop
-    container_name: ${CASE_NUMBER}_tor
+    container_name: tor
     volumes:
       - ./bookmarks:/bookmarks
       - ./${CASE_NUMBER}/tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
@@ -45,18 +45,18 @@ services:
     shm_size: "1gb"
     restart: unless-stopped
 
-    telegram:
-      image: paradoxxs/telegram
-      container_name: ${CASE_NUMBER}_telegram
-      ports:
-        - "6000:3000"
-      shm_size: "1gb"
-      restart: unless-stopped
+  telegram:
+    image: paradoxxs/telegram
+    container_name: telegram
+    ports:
+      - "6000:3000"
+    shm_size: "1gb"
+    restart: unless-stopped
 
-    keybase:
-      image: paradoxxs/keybase
-      container_name: ${CASE_NUMBER}_keybase
-      ports:
-        - "7000:3000"
-      shm_size: "1gb"
-      restart: unless-stopped
+  keybase:
+    image: paradoxxs/keybase
+    container_name: keybase
+    ports:
+      - "7000:3000"
+    shm_size: "1gb"
+    restart: unless-stopped
