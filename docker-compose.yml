@@ -10,10 +10,10 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./bookmarks:/bookmarks
-      - ./${CASE_NUMBER}/firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
+      - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
       - "3000:3000"
-      - "3001:3001"
+      - "4000:3001"
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
     ports:
-      - "4000:3000"
+      - "3001:3000"
       - "4001:3001"
     shm_size: "1gb"
     restart: unless-stopped
@@ -39,24 +39,23 @@ services:
     container_name: tor
     volumes:
       - ./bookmarks:/bookmarks
-      - ./${CASE_NUMBER}/tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
+      - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
     ports:
-      - "5000:3000"
+      - "3002:3000"
     shm_size: "1gb"
     restart: unless-stopped
 
   telegram:
-    image: paradoxxs/telegram
+    image: telegram
     container_name: telegram
     ports:
-      - "6000:3000"
-    shm_size: "1gb"
+      - "3003:3000"
     restart: unless-stopped
 
   keybase:
     image: paradoxxs/keybase
     container_name: keybase
     ports:
-      - "7000:3000"
+      - "3004:3000"
     shm_size: "1gb"
     restart: unless-stopped
