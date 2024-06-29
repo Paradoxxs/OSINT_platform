@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   telegram:
-    image: telegram
+    image: paradoxxs/telegram
     container_name: telegram
     ports:
       - "3003:3000"
