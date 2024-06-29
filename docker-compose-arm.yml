@@ -1,0 +1,72 @@
+services:
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./bookmarks:/bookmarks
+      - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
+    ports:
+      - "3000:3000"
+      - "4000:3001"
+    shm_size: "1gb"
+    restart: unless-stopped
+
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: chromium
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
+    ports:
+      - "3001:3000"
+      - "4001:3001"
+    shm_size: "1gb"
+    restart: unless-stopped
+
+
+  brave-tor:
+    image: paradoxxs/brave:arm
+    container_name: brave-tor
+    ports:
+      - "3002:3000"
+    shm_size: "1gb"
+    restart: unless-stopped
+
+# No ARM support for tor
+  # tor:
+  #   image: paradoxxs/tor-desktop
+  #   container_name: tor
+  #   volumes:
+  #     - ./bookmarks:/bookmarks
+  #     - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
+  #   ports:
+  #     - "3002:3000"
+  #   shm_size: "1gb"
+  #   restart: unless-stopped
+
+  telegram:
+    image: paradoxxs/telegram:arm
+    container_name: telegram
+    ports:
+      - "3003:3000"
+    restart: unless-stopped
+
+# keybase is not working on arm
+  # keybase:
+  #   image: paradoxxs/keybase
+  #   container_name: keybase
+  #   ports:
+  #     - "3004:3000"
+  #   shm_size: "1gb"
+  #   restart: unless-stopped
