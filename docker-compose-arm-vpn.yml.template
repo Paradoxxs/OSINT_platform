@@ -1,0 +1,79 @@
+version: '3'
+
+services:
+  vpn:
+    image: dperson/openvpn-client
+    container_name: vpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - OPENVPN_USERNAME=<your-username>
+      - OPENVPN_PASSWORD=<your-password>
+    volumes:
+      - ./vpn-config:/vpn
+    restart: unless-stopped
+    ports:
+      - "3000:3000" # Forward necessary ports
+      - "3001:3001"
+      - "3002:3002"
+      - "3003:3003"
+      - "3004:3004"
+
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./bookmarks:/bookmarks
+      - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
+    depends_on:
+      - vpn
+    network_mode: "service:vpn"
+    shm_size: "1gb"
+    restart: unless-stopped
+
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: chromium
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
+    depends_on:
+      - vpn
+    network_mode: "service:vpn"
+    shm_size: "1gb"
+    restart: unless-stopped
+
+  brave-tor:
+    image: paradoxxs/brave:arm
+    container_name: brave-tor
+    depends_on:
+      - vpn
+    network_mode: "service:vpn"
+    shm_size: "1gb"
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
+
+  telegram:
+    image: paradoxxs/telegram:arm
+    container_name: telegram
+    depends_on:
+      - vpn
+    network_mode: "service:vpn"
+    restart: unless-stopped
