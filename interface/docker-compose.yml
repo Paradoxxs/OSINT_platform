@@ -14,7 +14,6 @@ services:
       - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
       - "3000:3000"
-      - "4000:3001"
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -33,7 +32,6 @@ services:
       - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
     ports:
       - "3001:3000"
-      - "4001:3001"
     shm_size: "1gb"
     restart: unless-stopped
 

@@ -2,14 +2,13 @@ import streamlit as st
 import subprocess
 import os
 from pathlib import Path
+from pysqlcipher3 import dbapi2 as sqlite3
+
 
 # Base path for generated environment files
 env_dir = Path("./env_files")
 env_dir.mkdir(exist_ok=True)
 
-# Static PUID and PGID
-PUID = "1000"
-PGID = "1000"
 
 # Dropdown options for Time Zones and Locales
 TIME_ZONES = [
@@ -31,20 +30,20 @@ services = {
     "firefox": {
         "name": "Firefox",
         "volumes": {"FIREFOX_BOOKMARKS": "./bookmarks", "FIREFOX_PREFS": "./firefox/preferences"},
-        "ports": {"FIREFOX_PORT1": "3000", "FIREFOX_PORT2": "4000"},
+        "ports": {"FIREFOX_PORT": "3000"},
     },
     "chromium": {
         "name": "Chromium",
         "volumes": {"CHROMIUM_BOOKMARKS": "./chromium/bookmarks"},
-        "ports": {"CHROMIUM_PORT1": "3001", "CHROMIUM_PORT2": "4001"},
+        "ports": {"CHROMIUM_PORT": "3001"},
     },
     "tor": {
         "name": "Tor",
         "volumes": {"TOR_BOOKMARKS": "./tor/bookmarks"},
-        "ports": {"TOR_PORT1": "3002"},
+        "ports": {"TOR_PORT": "3002"},
     },
-    "telegram": {"name": "Telegram", "ports": {"TELEGRAM_PORT1": "3003"}},
-    "keybase": {"name": "Keybase", "ports": {"KEYBASE_PORT1": "3004"}},
+    "telegram": {"name": "Telegram", "ports": {"TELEGRAM_PORT": "3003"}},
+    "keybase": {"name": "Keybase", "ports": {"KEYBASE_PORT": "3004"}},
 }
 
 selected_services = {}
@@ -58,8 +57,6 @@ if st.sidebar.button("Deploy"):
         # Generate the .env file
         env_file_path = env_dir / f"{instance_name}.env"
         with open(env_file_path, "w") as f:
-            f.write(f"PUID={PUID}\n")
-            f.write(f"PGID={PGID}\n")
             f.write(f"TZ={timezone}\n")
             f.write(f"LC_ALL={locale}\n")
             # Add service-specific environment variables
@@ -97,3 +94,49 @@ try:
         st.write("No active instances.")
 except Exception as e:
     st.error(f"Failed to retrieve active instances: {e}")
+
+
+
+
+def initialize_encrypted_db(db_name, encryption_key):
+    try:
+        # Connect to the database
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+        st.write("Connection established.")
+        
+        # Set the encryption key
+        cursor.execute(f"PRAGMA key = '{encryption_key}';")
+        st.write("Encryption key set.")
+        
+        if not os.path.exists(db_name):
+            st.write(f"Database {db_name} does not exist. Creating a new one.")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS example_table (
+                id INTEGER PRIMARY KEY,
+                data TEXT
+            );
+            """)
+            st.write("Table created.")
+            conn.commit()
+        else:
+            # Try querying an existing table to verify the key
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            tables = cursor.fetchall()
+            st.write(f"Existing tables: {tables}")
+    except sqlite3.DatabaseError as e:
+        st.error("Failed to open database. The provided encryption key might be incorrect.")
+    finally:
+        conn.close()
+        st.write("Connection closed.")
+        st.session_state.database = True
+
+# Streamlit UI
+db_name = "encrypted_database.sqlite"
+
+if 'database' not in st.session_state:
+    encryption_key = st.text_input("Database encryption key", "password", type="password")
+    if st.button("Submit"):
+        # Prevent re-initialization and add feedback
+            with st.spinner("Initializing database..."):
+                initialize_encrypted_db(db_name, encryption_key)
