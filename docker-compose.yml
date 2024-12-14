@@ -13,7 +13,6 @@ services:
       - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
     ports:
       - "3000:3000"
-      - "4000:3001"
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -32,7 +31,6 @@ services:
       - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
     ports:
       - "3001:3000"
-      - "4001:3001"
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -60,4 +58,15 @@ services:
     ports:
       - "3004:3000"
     shm_size: "1gb"
+    restart: unless-stopped
+
+  remote-desk:
+    image: lscr.io/linuxserver/rdesktop:debian-kde
+    container_name: remote-desktop
+    ports:
+      - "3005:3000"
+    environment:
+      - TZ=Europe/Moscow
+      - INSTALL_PACKAGES=fonts-noto-cjk
+      - LC_ALL=ru_RU
     restart: unless-stopped
