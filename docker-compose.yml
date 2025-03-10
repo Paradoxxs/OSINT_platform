@@ -68,7 +68,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Moscow
+      - TZ=Europe/Moscow     
       - INSTALL_PACKAGES=fonts-noto-cjk
       - LC_ALL=ru_RU
     restart: unless-stopped
