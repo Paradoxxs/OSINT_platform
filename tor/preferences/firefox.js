@@ -7,4 +7,6 @@ pref("browser.aboutwelcome.enabled", false);
 pref("browser.bookmarks.file", "/bookmarks/bookmarks-tor.html");
 pref("browser.places.importBookmarksHTML", true);
 pref("browser.bookmarks.addedImportButton", false);
+pref("extensions.autoDisableScopes", 0);
+pref("extensions.enabledScopes", 15);
 pref("browser.toolbars.bookmarks.visibility","always")

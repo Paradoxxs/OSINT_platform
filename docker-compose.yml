@@ -1,4 +1,26 @@
 services:
+
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - URL=int311
+      - SUBDOMAINS=wildcard
+      - VALIDATION=http
+      - SWAG_AUTORELOAD=true
+      - DOCKER_MODS=linuxserver/mods:swag-dashboard
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - ./swag/config:/config
+    
   firefox:
     image: lscr.io/linuxserver/firefox:latest
     container_name: firefox
@@ -11,8 +33,8 @@ services:
     volumes:
       - ./bookmarks:/bookmarks
       - ./firefox/preferences:/usr/lib/firefox/browser/defaults/preferences/
-    ports:
-      - "4000:3000"
+      - ./data:/data
+      - ./firefox/policies.json:/etc/firefox/policies/policies.json
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -29,8 +51,7 @@ services:
       - LC_ALL=ru_RU
     volumes:
       - ./chromium/bookmarks:/config/.config/chromium/Default/Bookmarks
-    ports:
-      - "4001:3000"
+      - ./data:/data
     shm_size: "1gb"
     restart: unless-stopped
 
@@ -40,24 +61,23 @@ services:
     volumes:
       - ./bookmarks:/bookmarks
       - ./tor/preferences:/tor/tor-browser/Browser/browser/defaults/preferences/
-    ports:
-      - "4002:3000"
+      - ./data:/data
     shm_size: "1gb"
     restart: unless-stopped
 
   telegram:
     image: paradoxxs/telegram
     container_name: telegram
-    ports:
-      - "4003:3000"
+    volumes:
+      - ./data:/data
     restart: unless-stopped
 
   keybase:
     image: paradoxxs/keybase
     container_name: keybase
-    ports:
-      - "4004:3000"
     shm_size: "1gb"
+    volumes:
+      - ./data:/data
     restart: unless-stopped
 
   remote-desk:
@@ -65,6 +85,8 @@ services:
     container_name: remote-desktop
     ports:
       - "4005:3389"
+    volumes:
+      - ./data:/data
     environment:
       - PUID=1000
       - PGID=1000
