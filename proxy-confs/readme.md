@@ -1,0 +1,1 @@
+Place the files inside swag/config/nignx/proxy-confs
