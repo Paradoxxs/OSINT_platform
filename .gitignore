@@ -2,4 +2,5 @@ vpn-config
 docker-compose-arm-vpn.yml
 data
 swag/config/
+!swag/config/nginx
 
