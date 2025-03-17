@@ -1,1 +1,1 @@
-Place the files inside swag/config/nignx/proxy-confs
+Start up the containers and place the files inside swag/config/nignx/proxy-confs
