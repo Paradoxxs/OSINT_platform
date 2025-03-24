@@ -20,6 +20,7 @@ services:
       - "81:81"
     volumes:
       - ./swag/config:/config
+    restart: unless-stopped
     
   firefox:
     image: lscr.io/linuxserver/firefox:latest
