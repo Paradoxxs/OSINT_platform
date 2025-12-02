@@ -82,7 +82,7 @@ services:
     restart: unless-stopped
 
   remote-desk:
-    image: lscr.io/linuxserver/rdesktop:debian-kde
+    image: lscr.io/linuxserver/rdesktop:amd64-ubuntu-kde
     container_name: remote-desktop
     ports:
       - "4005:3389"
