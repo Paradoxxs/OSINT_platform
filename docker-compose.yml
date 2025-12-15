@@ -80,18 +80,3 @@ services:
     volumes:
       - ./data:/data
     restart: unless-stopped
-
-  remote-desk:
-    image: lscr.io/linuxserver/rdesktop:amd64-ubuntu-kde
-    container_name: remote-desktop
-    ports:
-      - "4005:3389"
-    volumes:
-      - ./data:/data
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Moscow     
-      - INSTALL_PACKAGES=fonts-noto-cjk
-      - LC_ALL=ru_RU
-    restart: unless-stopped
