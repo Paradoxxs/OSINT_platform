@@ -1,0 +1,80 @@
+{
+  "firefox-52b6529e": {
+    "id": "e78a4142-3747-4569-bec8-556228cbaa39",
+    "name": "firefox-52b6529e",
+    "service": "firefox",
+    "status": "running",
+    "container_id": "14782f1e728e",
+    "container_name": "firefox-52b6529e",
+    "image": "lscr.io/linuxserver/firefox:latest",
+    "created": "2025-12-15T12:29:17.812992",
+    "web_port": 3000,
+    "web_url": "http://localhost:3000",
+    "last_accessed": "2025-12-15T12:29:17.813008"
+  },
+  "chromium-429ec4c4": {
+    "id": "a81e746b-c7ea-4eba-9617-bfdbe5789ac4",
+    "name": "chromium-429ec4c4",
+    "service": "chromium",
+    "status": "running",
+    "container_id": "685fa1a9bd35",
+    "container_name": "chromium-429ec4c4",
+    "image": "lscr.io/linuxserver/chromium:latest",
+    "created": "2025-12-15T12:29:52.195779",
+    "web_port": 3001,
+    "web_url": "http://localhost:3001",
+    "last_accessed": "2025-12-15T12:29:52.195798"
+  },
+  "tor-e5a31f4c": {
+    "id": "3643ce4d-a917-468f-b8a1-29de3e41caea",
+    "name": "tor-e5a31f4c",
+    "service": "tor",
+    "status": "running",
+    "container_id": "57c9b0d3ca54",
+    "container_name": "tor-e5a31f4c",
+    "image": "paradoxxs/tor-desktop",
+    "created": "2025-12-15T12:30:05.231560",
+    "web_port": 3002,
+    "web_url": "http://localhost:3002",
+    "last_accessed": "2025-12-15T12:30:05.231574"
+  },
+  "tor-45fc660c": {
+    "id": "baca5b5f-8c22-48ce-9fb9-4fa059e1882a",
+    "name": "tor-45fc660c",
+    "service": "tor",
+    "status": "running",
+    "container_id": "b430eb3dee5c",
+    "container_name": "tor-45fc660c",
+    "image": "paradoxxs/tor-desktop",
+    "created": "2025-12-15T12:30:29.821619",
+    "web_port": 3003,
+    "web_url": "http://localhost:3003",
+    "last_accessed": "2025-12-15T12:30:29.821635"
+  },
+  "telegram-b26db579": {
+    "id": "765d9f4a-4fbf-478f-b0c8-a2e9f6d39860",
+    "name": "telegram-b26db579",
+    "service": "telegram",
+    "status": "running",
+    "container_id": "35eee7a82d41",
+    "container_name": "telegram-b26db579",
+    "image": "paradoxxs/telegram",
+    "created": "2025-12-15T12:32:21.955440",
+    "web_port": 3004,
+    "web_url": "http://localhost:3004",
+    "last_accessed": "2025-12-15T12:32:21.955459"
+  },
+  "chromium-1ba0a67f": {
+    "id": "5a458082-394e-41d4-9bd8-da0e412009be",
+    "name": "chromium-1ba0a67f",
+    "service": "chromium",
+    "status": "running",
+    "container_id": "8bdc363130d5",
+    "container_name": "chromium-1ba0a67f",
+    "image": "lscr.io/linuxserver/chromium:latest",
+    "created": "2025-12-15T12:32:39.997019",
+    "web_port": 3005,
+    "web_url": "http://localhost:3005",
+    "last_accessed": "2025-12-15T12:32:39.997037"
+  }
+}

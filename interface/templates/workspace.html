@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ workspace.name }} - Workspace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://novnc.io/include/rfb.js"></script>
+</head>
+<body class="workspace-view">
+    <div class="workspace-container">
+        <!-- Sidebar -->
+        <aside class="workspace-sidebar">
+            <div class="sidebar-header">
+                <a href="{{ url_for('index') }}" class="back-btn">
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+                </a>
+            </div>
+            
+            <div class="workspace-info">
+                <h3>{{ workspace.name }}</h3>
+                <div class="info-item">
+                    <span class="label">Service:</span>
+                    <span class="value">{{ workspace.service }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Status:</span>
+                    <span class="status-badge" id="statusBadge">{{ status }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Created:</span>
+                    <span class="value">{{ workspace.created[:10] }}</span>
+                </div>
+            </div>
+
+            <div class="sidebar-actions">
+                <button class="btn btn-block btn-secondary" onclick="refreshWorkspaceStatus()">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    Refresh
+                </button>
+                <button class="btn btn-block btn-danger" onclick="deleteWorkspace('{{ workspace.name }}')">
+                    <i class="bi bi-trash"></i>
+                    Delete
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h4>Quick Links</h4>
+                <a href="#" class="quick-link">
+                    <i class="bi bi-window"></i>
+                    Open in New Tab
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <h4>Logs</h4>
+                <button class="btn btn-block btn-outline" onclick="loadLogs()">
+                    <i class="bi bi-terminal"></i>
+                    Show Logs
+                </button>
+                <div id="logsContainer" class="logs-container" style="display:none;">
+                    <pre id="logsContent"></pre>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="workspace-main">
+            <div id="vnc-container" class="vnc-container">
+                <canvas id="vnc" style="width: 100%; height: 100%;"></canvas>
+            </div>
+            
+            <div id="connectionStatus" class="connection-status">
+                <i class="bi bi-hourglass-split"></i>
+                Connecting...
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='workspace.js') }}"></script>
+    <script>
+        const workspaceName = "{{ workspace.name }}";
+        const vncPort = {{ vnc_port }};
+        const status = "{{ status }}";
+        initVNC(vncPort);
+    </script>
+</body>
+</html>

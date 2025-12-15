@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 pysqlitecipher = "*"
 docker = "*"
-streamlit = "*"
 pysqlcipher3 = "*"
+flask = "*"
+flask-cors = "*"
+PyYAML = "*"
 
 [dev-packages]
 

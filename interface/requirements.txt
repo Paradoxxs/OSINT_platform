@@ -1,3 +1,4 @@
 docker
-streamlit
-pysqlcipher3
+PyYAML
+flask
+flask-cors
